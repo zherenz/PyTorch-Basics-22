@@ -30,7 +30,7 @@ class MyDataset(torch.utils.data.Dataset):
 
 
 train_data = MyDataset(data, label)
-train_loader = torch.utils.data.DataLoader(train_data, batch_size=10, shuffle=True)
+train_loader = torch.utils.data.DataLoader(train_data, batch_size=20, shuffle=True)
 
 
 class Net(nn.Module):
@@ -46,6 +46,7 @@ class Net(nn.Module):
         return x
 
 model = Net()
+model.cuda()
 print(model)
         
 # hyperparams
@@ -60,6 +61,8 @@ for epoch in range(epochs):
     
     for input, label in train_loader:
         optimizer.zero_grad()
+        input = input.cuda()
+        label = label.cuda()
         output = model(input)
         
         pred = torch.argmax(output, 1)
@@ -75,24 +78,4 @@ for epoch in range(epochs):
     train_acc = num_correct / len(train_data) * 100
     print('epoch: {} loss: {} train_acc: {}'.format(epoch + 1, epoch_loss, train_acc))
 
-
-
-
-# print('start training!')
-# for epoch in range(epochs):
-#     model.train()
-#     optimizer.zero_grad()
-#     data, label = data.cuda(), label.cuda()
-    
-#     output = model(data)
-#     loss = criterion(output, label)
-#     loss.backward()
-#     optimizer.step()
-    
-#     preds = torch.argmax(output, 1)
-#     num_correct = int(torch.sum(preds == label))
-#     # schedular.step()
-    
-#     print('epoch: {} loss: {:0.4f} train_acc: {}'.format(epoch + 1, float(loss), 100 * num_correct / 200))
-# print("finish training!")
   
