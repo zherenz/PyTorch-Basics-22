@@ -9,6 +9,8 @@ y1=torch.ones(100)
 data=torch.cat([x0,x1],dim=0).type(torch.FloatTensor) #shape(200,2)
 label=torch.cat([y0,y1],dim=0).type(torch.LongTensor) #shape(200)
 
+# data[0] = tensor([-2.2313, -0.5952])
+
 """
     write your code here
 """
