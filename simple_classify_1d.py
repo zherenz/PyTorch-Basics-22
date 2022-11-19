@@ -31,6 +31,8 @@ class MyDataset(torch.utils.data.Dataset):
 
 train_data = MyDataset(data, label)
 train_loader = torch.utils.data.DataLoader(train_data, batch_size=20, shuffle=True)
+val_data = MyDataset(data, label)
+val_loader = torch.utils.data.DataLoader(val_data, batch_size=20, shuffle=False)
 
 
 class Net(nn.Module):
@@ -50,23 +52,23 @@ model.cuda()
 print(model)
         
 # hyperparams
-epochs = 50
+epochs = 20
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 
 for epoch in range(epochs):
+    '''
+        train
+    '''
     model.train()
     total_loss = 0.0
-    total_correct_train = 0
+    num_correct = 0
     
     for input, label in train_loader:
         optimizer.zero_grad()
         input = input.cuda()
         label = label.cuda()
         output = model(input)
-        
-        pred = torch.argmax(output, 1)
-        num_correct = int(torch.sum(pred == label))
         
         loss = criterion(output, label)
         loss.backward()
@@ -75,7 +77,36 @@ for epoch in range(epochs):
         total_loss += loss
     
     epoch_loss = total_loss / len(train_loader)
-    train_acc = num_correct / len(train_data) * 100
-    print('epoch: {} loss: {} train_acc: {}'.format(epoch + 1, epoch_loss, train_acc))
+    print('epoch: {} loss: {:0.4f}'.format(epoch + 1, epoch_loss))
+    
+    '''
+        evaluate
+    '''
+    model.eval()
+    num_correct = 0
+    
+    for input, label in val_loader:
+        input = input.cuda()
+        label = label.cuda()
+        
+        with torch.no_grad():
+            output = model(input)
+        pred = torch.argmax(output, 1)
+        num_correct += ((pred == label).sum()).item()
+    
+    val_acc = 100 * num_correct / len(val_data)
+    print('val_acc: {}'.format(val_acc))
 
   
+'''
+    inference
+'''
+test_data = torch.tensor([1.0, 2.0])
+test_data = test_data.unsqueeze(0)
+test_data = test_data.cuda()
+
+with torch.no_grad():
+    output = model(test_data)
+
+pred = torch.argmax(output, 1)
+print("Prediction:", pred)
