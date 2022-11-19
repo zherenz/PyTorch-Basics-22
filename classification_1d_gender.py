@@ -111,5 +111,17 @@ for epoch in range(epochs):
         
     print('validation: loss: {:0.4f} acc: {:0.4f}%'.format(total_loss / len(val_loader), 100 * num_correct / len(val_data)))
     
+    
+'''
+    inference
+'''
+test_data = torch.tensor([[1.82, 80.0]])
+
+model.eval()
+with torch.no_grad():
+    input = test_data.cuda()
+output = model(input)
+pred = torch.argmax(output, 1).item()
+print('Prediciton', pred)
         
         
