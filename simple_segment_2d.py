@@ -30,6 +30,10 @@ mask = mask.unsqueeze(0) # torch.Size([1, 1, 1036, 1278])
 mask = mask.cuda()
 
 
+# >>> glob.glob('*.gif')
+# file_path.split('/')[-1]
+# ['1.gif', 'card.gif']
+
 '''
     model
 '''
