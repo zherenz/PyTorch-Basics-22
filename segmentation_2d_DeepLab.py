@@ -20,7 +20,7 @@ class MyData(torch.utils.data.Dataset):
     def __getitem__(self, idx):
         image = self.images[idx] # (1026, 1282, 3)
         image = self.transform(image) # torch.Size([3, 1026, 1282])
-        mask = self.masks[idx] # (1026, 1282)
+        mask = self.masks[idx] # (1026, 1282, 1) or (1026, 1282) # values should be set to 0, 1
         mask = self.transform(mask) # torch.Size([1, 1026, 1282])  # if not reshaped, totensor can also handle it
         return image, mask
     
