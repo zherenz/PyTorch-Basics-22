@@ -29,7 +29,7 @@ class MyData(torch.utils.data.Dataset):
         return len(self.masks)
     
 
-train_data = MyData("deeplab1.png", "deeplab2.png", ttf.ToTensor())
+train_data = MyData("data/deeplab1.png", "data/deeplab2.png", ttf.ToTensor())
 train_loader = torch.utils.data.DataLoader(train_data, batch_size=1, shuffle=True)
 
 model = torch.hub.load('pytorch/vision:v0.10.0', 'deeplabv3_resnet50', pretrained=False)

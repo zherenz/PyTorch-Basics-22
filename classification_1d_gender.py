@@ -24,11 +24,11 @@ class MyDataset(torch.utils.data.Dataset):
         return len(self.data)
     
 
-train_data = MyDataset("data_gender_train.txt")
+train_data = MyDataset("data/data_gender_train.txt")
 train_loader = torch.utils.data.DataLoader(train_data, batch_size=10, shuffle=True)
-print(next(iter(train_loader)))
+# print(next(iter(train_loader)))
 
-val_data = MyDataset("data_gender_val.txt")
+val_data = MyDataset("data/data_gender_val.txt")
 val_loader = torch.utils.data.DataLoader(val_data, batch_size=10, shuffle=True)
 
 

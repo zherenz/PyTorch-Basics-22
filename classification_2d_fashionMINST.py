@@ -28,9 +28,9 @@ class MyData(torch.utils.data.Dataset):
         return image, label
         
         
-train_data = MyData("fashion-mnist_test.csv", ttf.ToTensor())
+train_data = MyData("data/fashion-mnist_test.csv", ttf.ToTensor())
 train_loader = torch.utils.data.DataLoader(train_data, batch_size=50, shuffle=True)
-val_data = MyData("fashion-mnist_test.csv", ttf.ToTensor())
+val_data = MyData("data/fashion-mnist_test.csv", ttf.ToTensor())
 val_loader = torch.utils.data.DataLoader(train_data, batch_size=50, shuffle=False)
 
 

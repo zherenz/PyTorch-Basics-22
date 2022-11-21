@@ -13,10 +13,10 @@ import cv2
 input_image = Image.open("deeplab1.png").convert("RGB") # Image.open().convert("RGB")
 # <PIL.Image.Image image mode=RGB size=1282x1026 at 0x1232024D4F0>
 
-input_image = cv2.imread("deeplab1.png") # (1026, 1282, 3)
+input_image = cv2.imread("data/deeplab1.png") # (1026, 1282, 3)
 input_image = cv2.cvtColor(input_image, cv2.COLOR_BGR2RGB) # (1026, 1282, 3)
 
-input_mask = cv2.imread("deeplab2.png", 0) # (1036, 1278)
+input_mask = cv2.imread("data/deeplab2.png", 0) # (1036, 1278)
 # flag = 0, 8位深度，1通道
 # flag = 1, 8位深度，3通道
 
